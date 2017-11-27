@@ -1,0 +1,5 @@
+Witam,
+
+Proszê przerobiæ treœci z pliku Unix.pdf do strony 42. Poza tym proszê poczytaæ o kompresowaniu/dekompresowaniu plików strony 45 - 53.
+Pozdrawiam,
+Marek D. Koter
