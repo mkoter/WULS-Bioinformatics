@@ -1,0 +1,55 @@
+#NEXUS
+[ Title ]
+begin taxa;
+       dimensions ntax=4;
+       taxlabels
+             AGAMOUS-like 24 Arabidopsis thaliana.
+             PREDICTED: MADS-box protein AGL24 isoform X1 Raphanus sativus.
+             PREDICTED: MADS-box protein AGL24-like isoform X1 Brassica oleracea var. oleracea.
+             MADS-box protein AGL24-like Quercus lobata.
+;
+end;
+begin characters;
+       dimensions nchar=231;
+       format missing=? gap=- matchchar=. datatype=protein;
+       matrix
+
+AGAMOUS-like_24_Arabidopsis_thaliana.
+MAREKIRIKKIDNITARQVTFSKRRRGIFKKADELSVLCDADVALIIFSATGKLFEFSSS
+RMRDILGRYSLHASNINKLMDPPS-THLRLENCNLSRLSKEVEDKTKQLRKLRGEDLDGL
+NLEELQRLEKLLESGLSRVSEKKGECVMSQIFSLEKRGSELVDENKRLRDKLE-TLERAK
+LTTL--------KEALETESVTTNVSSYDSGTPLEDD-SDTSLKLGLPSWE
+
+PREDICTED:_MADS-box_protein_AGL24_isoform_X1_Raphanus_sativus.
+MAREKIRIKKIDNLTARQVTFSKRRRGIIKKAGELSILCDADVALIIFSATGKLFEFSSS
+SMRDILGRYNLHASNINKMMGPPSPYHQQLENCNLSRLSKEVEDKTKQLRQLRGDDLEGL
+NLEELQRLEKSLESGLSRVSEKKGECVMSQISSLEKRGSELVDENRRLREQLV-TLEMAK
+TMAL--------KEAVETESATTNVSSYDSGAPLEDDFSDTSLKLGLPSWE
+
+PREDICTED:_MADS-box_protein_AGL24-like_isoform_X1_Brassica_oleracea_var._oleracea.
+MAREKRRIKKIDNITARQVTFSKRRRGIFKKAGELSVLCDADVALIIFSATGKLFEFSSS
+RMRDILGRYNLHASNINKVMGLPSPYHQQLEDCNLSRLSQEVEDKTKQLRKLRGEDLEGL
+NLEELQRLEKMLESGLSRVSEKKGEFLMSQISSLEKRGSELADENRRLRERVVTTMEMAK
+TMAL--------KEAVETESATTNVSSYDSGAPLEDDFSDTSLKLGLPSWE
+
+MADS-box_protein_AGL24-like_Quercus_lobata.
+MAREKIKIKKIDNVTARQVTFSKRRRGLIKKAEELSVLCDAEVALVIFSATGKLFEFSSS
+SMKEILERYHLH-SNSHEKMDQPS-LELQLENGNHVRLSKEVADKTNQLRQMRGEDLQGL
+NLDDLVKLEKVLEAGISRVLESKEEKIMNEISALEKKGSQLLEENKQLKQKMM-MLSKGK
+RSSLVDSDIMIQEEGMSSDQSVTNVYSCNSGPPPEDDSSDTSLRLGLPFSN
+
+;
+end;
+begin mrbayes;
+	log start replace;
+	set autoclose = no nowarn=no;
+	lset applyto = (all) nst=6 rates = invgamma;
+	prset applyto = (all); 
+		[For the JC model add to the prset command the option statefreqpr = fixed(equal]
+	unlink revmat=(all) shape=(all) pinvar=(all)statefreq=(all) tratio= (all); 
+	showmodel;
+	mcmc ngen=10000000 printfreq=1000 samplefreq=100 nchains=4 temp=0.2 checkfreq = 50000 diagnfreq = 1000 stopval = 0.01 stoprule = yes; 
+	sumt relburnin = yes burninfrac = 0.25 contype = halfcompat;
+	sump relburnin = yes burninfrac =0.25;
+	log stop;
+end;
